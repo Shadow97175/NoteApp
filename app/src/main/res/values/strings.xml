@@ -6,15 +6,15 @@
     <string name="save">Save</string>
     <string name="paint">Paint</string>
     <string name="help_text">
-    Первая кнопка позволяет\n
-    создавать ноты и изменять\n
-    их длину, вторая - добавлять\n
-    и удалять точки, третья - \n
-    создавать паузы и изменять\n
-    их длину, четвертая - удалять\n
-    ноты и паузы. Также, при повторном\n
-    нажатии на ноту или паузу\n
-    можно менять их длину.</string>
+    First buttom let you\n
+    create notes and change\n
+    their size, second - add\n
+    and delete dots, third - \n
+    create pauses and change\n
+    their size, fourth - delete\n
+    notes and pauses. Also, with second\n
+    click note or pause\n
+    you can change their length.</string>
     <string name="help_title">Help</string>
     <string name="menu_title">Menu</string>
 </resources>

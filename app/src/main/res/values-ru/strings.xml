@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="start_new">New</string>
-    <string name="brush">Brush</string>
-    <string name="erase">Erase</string>
-    <string name="save">Save</string>
-    <string name="paint">Paint</string>
+    <string name="start_new">Новый</string>
+    <string name="brush">Кисть</string>
+    <string name="erase">Удалить</string>
+    <string name="save">Сохранить</string>
+    <string name="paint">Рисовать</string>
     <string name="help_text">
     Первая кнопка позволяет\n
     создавать ноты и изменять\n
@@ -15,6 +15,6 @@
     ноты и паузы. Также, при повторном\n
     нажатии на ноту или паузу\n
     можно менять их длину.</string>
-    <string name="help_title">Help</string>
+    <string name="help_title">Помощь</string>
     <string name="menu_title">Меню</string>
 </resources>
