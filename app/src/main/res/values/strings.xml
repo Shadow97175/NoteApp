@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">NoteApp</string>
+    <string name="start_new">New</string>
+    <string name="brush">Brush</string>
+    <string name="erase">Erase</string>
+    <string name="save">Save</string>
+    <string name="paint">Paint</string>
+    <string name="help_text">
+    Первая кнопка позволяет\n
+    создавать ноты и изменять\n
+    их длину, вторая - добавлять\n
+    и удалять точки, третья - \n
+    создавать паузы и изменять\n
+    их длину, четвертая - удалять\n
+    ноты и паузы. Также, при повторном\n
+    нажатии на ноту или паузу\n
+    можно менять их длину.</string>
+    <string name="help_title">Help</string>
+    <string name="menu_title">Menu</string>
+</resources>
