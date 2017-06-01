@@ -2,6 +2,7 @@ package com.example.noteapp;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Parcel;
 
 /**
  * Created by Николай on 29.05.2017.
@@ -67,4 +68,35 @@ public class Pause implements Element {
     public void nextLength() {
         length.next();
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.length, flags);
+        dest.writeInt(this.startTime);
+        dest.writeInt(this.line);
+    }
+
+    protected Pause(Parcel in) {
+        this.length = in.readParcelable(NoteLength.class.getClassLoader());
+        this.startTime = in.readInt();
+        this.line = in.readInt();
+    }
+
+    public static final Creator<Pause> CREATOR = new Creator<Pause>() {
+        @Override
+        public Pause createFromParcel(Parcel source) {
+            return new Pause(source);
+        }
+
+        @Override
+        public Pause[] newArray(int size) {
+            return new Pause[size];
+        }
+    };
 }

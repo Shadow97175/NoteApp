@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NoteApp</string>
     <string name="start_new">New</string>
     <string name="brush">Brush</string>
     <string name="erase">Erase</string>
@@ -16,5 +16,5 @@
     нажатии на ноту или паузу\n
     можно менять их длину.</string>
     <string name="help_title">Help</string>
-    <string name="menu_title">Menu</string>
+    <string name="menu_title">Меню</string>
 </resources>

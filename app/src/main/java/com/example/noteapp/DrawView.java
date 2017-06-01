@@ -16,8 +16,7 @@ import java.util.ArrayList;
  * Created by Николай on 29.05.2017.
  */
 
-public class DrawView extends View
-{
+public class DrawView extends View {
 
     private final static int noteWidth = 30;
     private final static int noteHeight = 30;
@@ -38,16 +37,16 @@ public class DrawView extends View
     private NoteString noteString;
     private boolean addDot;
     private boolean pauseTool;
+    private ActionElementListener mActionElementListener;
 
-    public ArrayList savedNotes;
 
-    public DrawView(Context context, AttributeSet attrs){
+    public DrawView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setupDrawing();
         noteString = new NoteString();
     }
 
-    private void setupDrawing(){
+    private void setupDrawing() {
 //get drawing area setup for interaction
         paint = new Paint();
     }
@@ -60,12 +59,10 @@ public class DrawView extends View
         drawCanvas = new Canvas(canvasBitmap);
     }
 
-    void drawElement(Canvas canvas, float x, float y, Paint paint, Context context, Element a)
-    {
+    void drawElement(Canvas canvas, float x, float y, Paint paint, Context context, Element a) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), a.getDrawable());
         canvas.drawBitmap(bitmap, x, y, paint);
-        if (a.hasDot())
-        {
+        if (a.hasDot()) {
             canvas.drawCircle(x + noteWidth, y, 3f, paint);
         }
     }
@@ -78,25 +75,21 @@ public class DrawView extends View
         int width = getWidth();
         int height = getHeight();
 
-        for(int j = 0; j < lines; j++)
-        {
+        for (int j = 0; j < lines; j++) {
             int y = (int) (j * (height * 1.0 / lines));
             if (j > lowerVisibleNoteString && j % 2 == 1 && j < highterVisibleNoteString)
                 canvas.drawLine(0, y, width, y, paint);
         }
 
-        for(int i = 0; i < noteString.count(); ++i)
-        {
+        for (int i = 0; i < noteString.count(); ++i) {
             Element element = noteString.getNote(i);
             Drawable d = getResources().getDrawable(R.drawable.paint);
             assert d != null;
 
             int line = 0;
-            if(i == 0 || element instanceof Note) {
+            if (i == 0 || element instanceof Note) {
                 line = element.getLine();
-            }
-            else
-            {
+            } else {
                 if (line % 2 == 0) {
                     --line;
                 }
@@ -112,26 +105,22 @@ public class DrawView extends View
         }
     }
 
-    private int calcStartTime(float x)
-    {
+    private int calcStartTime(float x) {
         return (int) (x / noteWidth);
     }
 
-    private int calcLine(float y, int lines)
-    {
-        return  (int) (y * lines * 1.0 / getHeight());
+    private int calcLine(float y, int lines) {
+        return (int) (y * lines * 1.0 / getHeight());
     }
 
 
-    private int checkNote(float x, float y)
-    {
+    private int checkNote(float x, float y) {
         int startTime = calcStartTime(x);
         return noteString.findNote(startTime, calcLine(y, noteString.size()));
     }
 
 
-    public void createNote(float x, float y, boolean pauseTool)
-    {
+    private void createNote(float x, float y, boolean pauseTool) {
         int startTime = calcStartTime(x);
         int line = calcLine(y, noteString.size());
 
@@ -140,7 +129,21 @@ public class DrawView extends View
         //System.err.println("Line: " + line);
 
         Element note = pauseTool ? new Pause(startTime, line) : new Note(startTime, line);
+        if (mActionElementListener != null) {
+            mActionElementListener.createElement(note);
+        }
+
         noteString.addNote(note);
+        invalidate();
+    }
+
+    public void createNotesFromList(ArrayList<Element> list) {
+        if (list == null) {
+            return;
+        }
+        for (Element element : list) {
+            noteString.addNote(element);
+        }
         invalidate();
     }
 
@@ -152,18 +155,14 @@ public class DrawView extends View
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                int i = checkNote(touchX,touchY);
-                if (i == -1 && !delete)
-                {
+                int i = checkNote(touchX, touchY);
+                if (i == -1 && !delete) {
                     createNote(touchX, touchY, pauseTool);
-                    savedNotes.add(0);
-                }
-                else
-                {
+
+                } else {
                     if (delete)
                         noteString.removeNote(i);
-                    else
-                    {
+                    else {
                         if (addDot)
                             noteString.getNote(i).nextDot();
                         else
@@ -184,7 +183,7 @@ public class DrawView extends View
     }
 
 
-    public void setColor(String newColor){
+    public void setColor(String newColor) {
 //set color
         invalidate();
         currNoteLength = Integer.parseInt(newColor);
@@ -200,5 +199,9 @@ public class DrawView extends View
 
     public void setPauseTool(boolean pauseTool) {
         this.pauseTool = pauseTool;
+    }
+
+    public void setActionElementListener(ActionElementListener actionElementListener) {
+        mActionElementListener = actionElementListener;
     }
 }

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Parcel;
 
 /**
  * Created by Николай on 29.05.2017.
@@ -88,4 +89,38 @@ public class Note implements Element {
     public String toString(){
         return "Octave: " + octave + ", " + noteSound.toString() + ", " + "Length in seconds: " + length.getSeconds();
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.octave);
+        dest.writeInt(this.noteSound == null ? -1 : this.noteSound.ordinal());
+        dest.writeParcelable(this.length, flags);
+        dest.writeInt(this.startTime);
+    }
+
+    protected Note(Parcel in) {
+        this.octave = in.readInt();
+        int tmpNoteSound = in.readInt();
+        this.noteSound = tmpNoteSound == -1 ? null : NoteSound.values()[tmpNoteSound];
+        this.length = in.readParcelable(NoteLength.class.getClassLoader());
+        this.startTime = in.readInt();
+    }
+
+    public static final Creator<Note> CREATOR = new Creator<Note>() {
+        @Override
+        public Note createFromParcel(Parcel source) {
+            return new Note(source);
+        }
+
+        @Override
+        public Note[] newArray(int size) {
+            return new Note[size];
+        }
+    };
 }
